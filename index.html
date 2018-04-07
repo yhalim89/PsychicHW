@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>The Psychic Game</title>
+  </head>
+  
+  <body>
+    
+    <div id="game">
+      <h1>The Pyschic Game</h1>
+      <p>Guess what letter I'm thinking of</p>
+      <p id="wins">Wins:</p>
+      <p id="loses">Loses:</p>
+      <p id="guessLeft">Guesses Left:</p>
+      <p id="guessSofar">Your Guesses so far:</p>
+    </div>
+    
+    <script type="text/javascript">
+    var computerChoice = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    var wins = 0;
+    var loses = 0;
+    var guess = 9;
+    var guessesLeft = 9;
+    var ourGuess = 0;
+    var guessedLetters = [];
+ 
+    function reset() {
+        guessesLeft = 9;
+        guessedLetters = [];
+        console.log("complete");
+        document.querySelector("#guessLeft").innerHTML = "GuessesLeft: " + guessesLeft;
+       document.querySelector('#guessSofar').innerHTML = "Your Guesses so far: " + guessedLetters;
+    }
+reset();
+    document.onkeyup = function(event) {
+        var userChoice = event.key;
+        console.log(userChoice)
+        if (guessedLetters.indexOf(userChoice) < 0) {
+            var computerGuess = computerChoice[Math.floor(Math.random() * computerChoice.length)];
+            console.log(computerGuess)
+            if (guessesLeft > 0) {
+                console.log(userChoice)
+                console.log(computerGuess)
+                if (userChoice == computerGuess) {
+                    wins++;
+                    document.querySelector("#wins").innerHTML = "wins:" + wins;
+                    alert("Yes, you are psychic!");
+                    reset();
+                } else {
+                    alert("wrong! guess again!");
+                    guessesLeft--;
+                    document.querySelector("#guessLeft").innerHTML = "GuessesLeft: " + guessesLeft;
+                    guessedLetters.push(userChoice);
+                    document.querySelector('#guessSofar').innerHTML = "Your Guesses so far: " + guessedLetters;
+                     if (guessesLeft === 0) {
+                         loses++;
+                        document.querySelector("#loses").innerHTML = "loses:" + loses;
+                        console.log('should reset!');
+                        reset();
+                    }
+                }
+            } else {
+               
+                
+                alert("Sorry, you're not psychic, maybe try again?");
+            };
+        } else {
+            alert('you already guessed that letter')
+        }
+    };
+    </script>
+  </body>
+</html>
